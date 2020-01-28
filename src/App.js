@@ -5,8 +5,8 @@ import { gql } from "apollo-boost";
 import "./App.css";
 
 const PLACES_QUERY = gql`
-  query Places {
-    places {
+  query Places($first: Int!) {
+    places(first: $first) {
       id
       name
     }
@@ -14,7 +14,11 @@ const PLACES_QUERY = gql`
 `;
 
 function App() {
-  const { loading, data } = useQuery(PLACES_QUERY);
+  const { loading, data } = useQuery(PLACES_QUERY, {
+    variables: {
+      first: 3
+    }
+  });
 
   if (loading) return <p>Loading...</p>;
 
