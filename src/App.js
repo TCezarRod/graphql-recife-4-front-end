@@ -1,33 +1,18 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+import PlacesPage from "./PlacesPage";
+import NeighboursPage from "./NeighboursPage";
 import "./App.css";
 
-const PLACES_QUERY = gql`
-  query Places($first: Int!) {
-    places(first: $first) {
-      id
-      name
-    }
-  }
-`;
-
 function App() {
-  const { loading, data } = useQuery(PLACES_QUERY, {
-    variables: {
-      first: 3
-    }
-  });
-
-  if (loading) return <p>Loading...</p>;
-
   return (
-    <ul>
-      {data.places.map(({ id, name }) => {
-        return <li key={id}>{name}</li>;
-      })}
-    </ul>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" render={() => <PlacesPage />} />
+        <Route exact path="/neighbours" render={() => <NeighboursPage />} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
