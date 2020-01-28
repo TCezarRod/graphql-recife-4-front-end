@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
+
+import "./App.css";
+
+const PLACES_QUERY = gql`
+  query Places {
+    places {
+      id
+      name
+    }
+  }
+`;
 
 function App() {
+  const { loading, data } = useQuery(PLACES_QUERY);
+
+  if (loading) return <p>Loading...</p>;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ul>
+      {data.places.map(({ id, name }) => {
+        return <li key={id}>{name}</li>;
+      })}
+    </ul>
   );
 }
 
