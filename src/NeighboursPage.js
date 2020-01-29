@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import "./App.css";
 
 const NEIGHBOURS_QUERY = gql`
-  query Neighbours($first: Int!) {
-    places(first: $first) {
+  query Neighbours {
+    places {
       id
       name
       neighbours {
@@ -19,28 +19,24 @@ const NEIGHBOURS_QUERY = gql`
 `;
 
 function NeighboursPage() {
-  const { loading, data } = useQuery(NEIGHBOURS_QUERY, {
-    variables: {
-      first: 3
-    }
-  });
+  const { loading, data } = useQuery(NEIGHBOURS_QUERY);
 
   if (loading) return <p>Loading...</p>;
 
   return (
     <div>
-      <Link to="/">Places</Link>
+      <Link to="/">Back to Places</Link>
       <ul>
         {data.places.map(({ id, name, neighbours }) => {
           return (
-            <div>
+            <>
               <li key={id}>{name}</li>
               <ul>
                 {neighbours.map(({ id: neighbourId, name: neighbourName }) => (
                   <li key={neighbourId}>{neighbourName}</li>
                 ))}
               </ul>
-            </div>
+            </>
           );
         })}
       </ul>
