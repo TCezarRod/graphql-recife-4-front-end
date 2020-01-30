@@ -11,7 +11,7 @@ const PLACES_QUERY = gql`
       id
       name
       address {
-        line1
+        streetName
         city
       }
     }
@@ -38,13 +38,13 @@ const PAGE_SIZE = 3;
 function PlacesPage() {
   const [editingIndex, setEditingIndex] = useState();
   const [editingValue, setEditingValue] = useState();
+
   const { loading, data, fetchMore } = useQuery(PLACES_QUERY, {
     variables: {
       first: PAGE_SIZE,
       offset: 0
     }
   });
-
   const [deletePlace] = useMutation(DELETE_PLACE_MUTATION);
   const [updatePlace] = useMutation(UPDATE_PLACE_MUTATION);
 
@@ -56,7 +56,7 @@ function PlacesPage() {
       <ul>
         {data.places.map(({ id, name, address = {} }, index) => {
           return (
-            <li key={id}>
+            <li key={id} style={{ marginBottom: `8px` }}>
               {editingIndex === index ? (
                 <>
                   <input
@@ -127,7 +127,7 @@ function PlacesPage() {
               )}
 
               <br />
-              <address>{`${address.line1} - ${address.city}`}</address>
+              <address>{`${address.streetName} - ${address.city}`}</address>
             </li>
           );
         })}

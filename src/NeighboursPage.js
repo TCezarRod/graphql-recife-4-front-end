@@ -20,7 +20,6 @@ const NEIGHBOURS_QUERY = gql`
 
 function NeighboursPage() {
   const { loading, data } = useQuery(NEIGHBOURS_QUERY);
-
   if (loading) return <p>Loading...</p>;
 
   return (
