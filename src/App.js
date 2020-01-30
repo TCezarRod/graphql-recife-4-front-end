@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import PlacesPage from "./PlacesPage";
 import NeighboursPage from "./NeighboursPage";
-import "./App.css";
 
 function App() {
   return (
